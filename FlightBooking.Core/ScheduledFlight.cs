@@ -87,6 +87,8 @@ namespace FlightBooking.Core
             result += _newLine;
             result += Indentation + "Loyalty member sales: " + Passengers.Count(p => p.Type == PassengerType.LoyaltyMember);
             result += _newLine;
+            result += Indentation + "Discounted sales: " + Passengers.Count(p => p.Type == PassengerType.Discounted);
+            result += _newLine;
             result += Indentation + "Airline employee comps: " + Passengers.Count(p => p.Type == PassengerType.AirlineEmployee);
             
             result += _verticalWhiteSpace;

@@ -44,6 +44,16 @@ namespace FlightBooking.Console
                         IsUsingLoyaltyPoints = Convert.ToBoolean(passengerSegments[5]),
                     });
                 }
+                else if (enteredText.Contains("add discounted"))
+                {
+                    var passengerSegments = enteredText.Split(' ');
+                    _scheduledFlight.AddPassenger(new Passenger
+                    {
+                        Type = PassengerType.Discounted,
+                        Name = passengerSegments[2],
+                        Age = Convert.ToInt32(passengerSegments[3]),
+                    });
+                }
                 else if (enteredText.Contains("add airline"))
                 {
                     var passengerSegments = enteredText.Split(' ');
