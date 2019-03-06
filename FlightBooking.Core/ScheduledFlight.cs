@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using FlightBooking.Core.ExtentionMethods;
+using static FlightBooking.Core.Enum.DiscountType;
 
 namespace FlightBooking.Core
 {
@@ -70,7 +71,8 @@ namespace FlightBooking.Core
                         }
                     case (PassengerType.Discounted):
                         {
-                            profitFromFlight += FlightRoute.BasePrice.applyDiscount(50);
+                            profitFromFlight += 
+                                FlightRoute.BasePrice.applyDiscount((int)DiscontType.HalfPrice);
                             break;
                         }
                     case (PassengerType.AirlineEmployee):
