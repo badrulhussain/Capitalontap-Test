@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using FlightBooking.Core.ExtentionMethods;
 
 namespace FlightBooking.Core
 {
@@ -67,7 +68,12 @@ namespace FlightBooking.Core
                             totalExpectedBaggage += 2;
                             break;
                         }
-                    case(PassengerType.AirlineEmployee):
+                    case (PassengerType.Discounted):
+                        {
+                            profitFromFlight += FlightRoute.BasePrice.applyDiscount(50);
+                            break;
+                        }
+                    case (PassengerType.AirlineEmployee):
                         {
                             totalExpectedBaggage += 1;
                             break;
