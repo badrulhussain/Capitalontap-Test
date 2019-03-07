@@ -70,10 +70,14 @@ namespace FlightBooking.Console
                 else if (enteredText.Contains("primary rule"))
                 {
                     _flightRuleService._fluightRule = FlightRule.Primary;
+                    System.Console.WriteLine(
+                        string.Format("Flight rule set to: {0}", _flightRuleService._fluightRule));
                 }
                 else if (enteredText.Contains("secondary rule"))
                 {
                     _flightRuleService._fluightRule = FlightRule.Secondary;
+                    System.Console.WriteLine(
+                        string.Format("Flight rule set to: {0}", _flightRuleService._fluightRule));
                 }
                 else if (enteredText.Contains("exit"))
                 {

@@ -22,7 +22,7 @@ namespace FlightBooking.Core
         }
 
         public FlightRoute FlightRoute { get; }
-        public FlightRuleService FlightRuleServic { get; set; }
+        public FlightRuleService FlightRuleService { get; set; }
         public Plane Aircraft { get; private set; }
         public List<Passenger> Passengers { get; }
 
@@ -126,7 +126,7 @@ namespace FlightBooking.Core
 
             result += _verticalWhiteSpace;
 
-            var canFlightProceed = FlightRuleServic.Get(
+            var canFlightProceed = FlightRuleService.Get(
                 profitSurplus,
                 costOfFlight,
                 seatsTaken,
