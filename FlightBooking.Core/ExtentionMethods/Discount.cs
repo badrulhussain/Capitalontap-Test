@@ -8,7 +8,7 @@ namespace FlightBooking.Core.ExtentionMethods
     {
         public static double applyDiscount(this double price, int deductionValue)
         {
-            return price - ((deductionValue / 100) * price);
+            return price - ((deductionValue * price) / 100);
         }
     }
 }
