@@ -10,8 +10,10 @@ namespace FlightBooking.Core.Service
         public FlightRule _fluightRule { get; set; } =
             FlightRule.Primary;
 
-        public bool Get(double profitSurplus, 
+        public bool Get(double profitSurplus,
+            double costOfFlight,
             int seatsTaken,
+            int employeesAboard,
             Plane Aircraft,
             FlightRoute FlightRoute)
         {
@@ -20,6 +22,15 @@ namespace FlightBooking.Core.Service
                 if (profitSurplus > 0 &&
                     seatsTaken < Aircraft.NumberOfSeats &&
                     seatsTaken / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
+                {
+                    return true;
+                }
+            }
+            if (_fluightRule == FlightRule.Secondary)
+            {
+                if (profitSurplus > costOfFlight &&
+                    seatsTaken < Aircraft.NumberOfSeats &&
+                    employeesAboard / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
                 {
                     return true;
                 }

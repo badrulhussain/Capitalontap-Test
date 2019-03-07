@@ -44,6 +44,7 @@ namespace FlightBooking.Core
             var totalLoyaltyPointsRedeemed = 0;
             var totalExpectedBaggage = 0;
             var seatsTaken = 0;
+            var employeesAboard = 0;
 
             var result = "Flight summary for " + FlightRoute.Title;
 
@@ -82,6 +83,7 @@ namespace FlightBooking.Core
                     case (PassengerType.AirlineEmployee):
                         {
                             totalExpectedBaggage += 1;
+                            employeesAboard++;
                             break;
                         }
                     default:
@@ -126,7 +128,9 @@ namespace FlightBooking.Core
 
             var canFlightProceed = FlightRuleServic.Get(
                 profitSurplus,
-                seatsTaken, 
+                costOfFlight,
+                seatsTaken,
+                employeesAboard,
                 Aircraft, 
                 FlightRoute);
 
