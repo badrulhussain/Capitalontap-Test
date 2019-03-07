@@ -17,28 +17,31 @@ namespace FlightBooking.Core.Service
             Plane Aircraft,
             FlightRoute FlightRoute)
         {
-            switch(_fluightRule) {
-                case  FlightRule.Primary :
-                    {
-                        if (profitSurplus > 0 &&
-                            seatsTaken < Aircraft.NumberOfSeats &&
-                            seatsTaken / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
-                            return true;
+            if (seatsTaken < Aircraft.NumberOfSeats)
+            {
+                switch (_fluightRule)
+                {
+                    case FlightRule.Primary:
+                        {
+                            if (profitSurplus > 0 &&
+                                seatsTaken / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
+                                return true;
+                            break;
+                        }
+                    case FlightRule.Secondary:
+                        {
+                            if (profitSurplus > costOfFlight &&
+                                employeesAboard / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
+                                return true;
+                        }
                         break;
-                    }
-                case FlightRule.Secondary:
-                    {
-                        if (profitSurplus > costOfFlight &&
-                            seatsTaken < Aircraft.NumberOfSeats &&
-                            employeesAboard / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
-                            return true;
-                    }
-                    break;
-                default:
-                    {
-                        return false;
-                    }
+                    default:
+                        {
+                            return false;
+                        }
+                }
             }
+
             return false;
         }
     }
