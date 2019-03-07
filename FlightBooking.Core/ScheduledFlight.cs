@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using FlightBooking.Core.ExtentionMethods;
-using static FlightBooking.Core.Enum.DiscountType;
+using static FlightBooking.Core.Enum.BookingEnum;
+using FlightBooking.Core.Service;
 
 namespace FlightBooking.Core
 {
@@ -12,13 +13,16 @@ namespace FlightBooking.Core
         private readonly string _newLine = Environment.NewLine;
         private const string Indentation = "    ";
 
-        public ScheduledFlight(FlightRoute flightRoute)
+        public ScheduledFlight(FlightRoute flightRoute,
+            FlightRuleService flightRuleService)
         {
             FlightRoute = flightRoute;
+            FlightRuleServic = flightRuleService;
             Passengers = new List<Passenger>();
         }
 
         public FlightRoute FlightRoute { get; }
+        public FlightRuleService FlightRuleServic { get; set; }
         public Plane Aircraft { get; private set; }
         public List<Passenger> Passengers { get; }
 
@@ -120,9 +124,13 @@ namespace FlightBooking.Core
 
             result += _verticalWhiteSpace;
 
-            if (profitSurplus > 0 &&
-                seatsTaken < Aircraft.NumberOfSeats &&
-                seatsTaken / (double) Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
+            var canFlightProceed = FlightRuleServic.Get(
+                profitSurplus,
+                seatsTaken, 
+                Aircraft, 
+                FlightRoute);
+
+            if (canFlightProceed)
             {
                 result += "THIS FLIGHT MAY PROCEED";
             }

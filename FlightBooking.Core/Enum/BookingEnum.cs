@@ -4,11 +4,17 @@ using System.Text;
 
 namespace FlightBooking.Core.Enum
 {
-    public static class DiscountType
+    public static class BookingEnum
     {
         public enum DiscontType
         {
             HalfPrice = 50
+        }
+
+        public enum FlightRule
+        {
+            Primary,
+            Secondary
         }
     }
 }

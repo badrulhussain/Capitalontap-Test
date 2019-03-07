@@ -1,11 +1,14 @@
 ﻿using System;
 using FlightBooking.Core;
+using FlightBooking.Core.Service;
+using static FlightBooking.Core.Enum.BookingEnum;
 
 namespace FlightBooking.Console
 {
     internal class Program
     {
         private static ScheduledFlight _scheduledFlight ;
+        private static FlightRuleService _flightRuleService;
 
         private static void Main(string[] args)
         {
@@ -64,6 +67,14 @@ namespace FlightBooking.Console
                         Age = Convert.ToInt32(passengerSegments[3]),
                     });
                 }
+                else if (enteredText.Contains("rule primary"))
+                {
+                    _flightRuleService._fluightRule = FlightRule.Primary;
+                }
+                else if (enteredText.Contains("rule secondary"))
+                {
+                    _flightRuleService._fluightRule = FlightRule.Secondary;
+                }
                 else if (enteredText.Contains("exit"))
                 {
                     Environment.Exit(1);
@@ -79,6 +90,8 @@ namespace FlightBooking.Console
 
         private static void SetupAirlineData()
         {
+            _flightRuleService = new FlightRuleService();
+
             var londonToParis = new FlightRoute("London", "Paris")
             {
                 BaseCost = 50, 
@@ -87,9 +100,12 @@ namespace FlightBooking.Console
                 MinimumTakeOffPercentage = 0.7
             };
 
-            _scheduledFlight = new ScheduledFlight(londonToParis);
+            _scheduledFlight = new ScheduledFlight(
+                londonToParis,
+                _flightRuleService);
 
             _scheduledFlight.SetAircraftForRoute(new Plane { Id = 123, Name = "Antonov AN-2", NumberOfSeats = 12 });
+
         }
     }
 }
