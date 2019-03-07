@@ -146,13 +146,13 @@ namespace FlightBooking.Core
                 result += "FLIGHT MAY NOT PROCEED";
 
                 if (seatsTaken > Aircraft.NumberOfSeats)
-                    result += checkForAvailablePlanes(seatsTaken);
+                    result += checkForPlanesWithMoreSeats(seatsTaken);
             }
             
             return result;
         }
 
-        private string checkForAvailablePlanes(int seatsTaken)
+        private string checkForPlanesWithMoreSeats(int seatsTaken)
         {
             var availablePlanes = AvailablePlaneService
                 .GetWithMoreSeats(seatsTaken);
