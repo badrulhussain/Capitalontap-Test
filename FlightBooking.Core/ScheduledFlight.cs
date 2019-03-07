@@ -17,7 +17,7 @@ namespace FlightBooking.Core
             FlightRuleService flightRuleService)
         {
             FlightRoute = flightRoute;
-            FlightRuleServic = flightRuleService;
+            FlightRuleService = flightRuleService;
             Passengers = new List<Passenger>();
         }
 
