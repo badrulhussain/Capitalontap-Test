@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FlightBooking.Core;
 using FlightBooking.Core.Service;
 using static FlightBooking.Core.Enum.BookingEnum;
@@ -9,6 +10,7 @@ namespace FlightBooking.Console
     {
         private static ScheduledFlight _scheduledFlight ;
         private static FlightRuleService _flightRuleService;
+        private static AvailablePlaneService _availablePlaneService;
 
         private static void Main(string[] args)
         {
@@ -95,6 +97,11 @@ namespace FlightBooking.Console
         private static void SetupAirlineData()
         {
             _flightRuleService = new FlightRuleService();
+            _availablePlaneService = new AvailablePlaneService();
+
+            _availablePlaneService.Planes = new List<Plane>();
+            _availablePlaneService.Planes.Add(new Plane { Id = 124, Name = "Bombardier Q400", NumberOfSeats = 15 });
+            _availablePlaneService.Planes.Add(new Plane { Id = 125, Name = "ATR 640", NumberOfSeats = 20 });
 
             var londonToParis = new FlightRoute("London", "Paris")
             {
@@ -106,7 +113,8 @@ namespace FlightBooking.Console
 
             _scheduledFlight = new ScheduledFlight(
                 londonToParis,
-                _flightRuleService);
+                _flightRuleService,
+                _availablePlaneService);
 
             _scheduledFlight.SetAircraftForRoute(new Plane { Id = 123, Name = "Antonov AN-2", NumberOfSeats = 12 });
 

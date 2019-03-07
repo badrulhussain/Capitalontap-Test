@@ -14,16 +14,19 @@ namespace FlightBooking.Core
         private const string Indentation = "    ";
 
         public ScheduledFlight(FlightRoute flightRoute,
-            FlightRuleService flightRuleService)
+            FlightRuleService flightRuleService,
+            AvailablePlaneService availablePlaneService)
         {
             FlightRoute = flightRoute;
             FlightRuleService = flightRuleService;
+            AvailablePlaneService = availablePlaneService;
             Passengers = new List<Passenger>();
         }
 
         public FlightRoute FlightRoute { get; }
         public FlightRuleService FlightRuleService { get; set; }
         public Plane Aircraft { get; private set; }
+        public AvailablePlaneService AvailablePlaneService { get; set; }
         public List<Passenger> Passengers { get; }
 
         public void AddPassenger(Passenger passenger)
@@ -141,6 +144,20 @@ namespace FlightBooking.Core
             else
             {
                 result += "FLIGHT MAY NOT PROCEED";
+
+                var availablePlanes = AvailablePlaneService
+                    .GetWithMoreSeats(seatsTaken);
+
+                if(availablePlanes != null)
+                {
+                    result += string.Format("{0}Other more suitable aircraft are:{1}",
+                        _newLine,
+                        _newLine);
+                    foreach (var plane in availablePlanes)
+                    {
+                        result += string.Format("{0} could handle this flight.{1}", plane.Name, _newLine);
+                    }
+                }
             }
             
             return result;
