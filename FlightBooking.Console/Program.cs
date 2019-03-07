@@ -67,11 +67,11 @@ namespace FlightBooking.Console
                         Age = Convert.ToInt32(passengerSegments[3]),
                     });
                 }
-                else if (enteredText.Contains("rule primary"))
+                else if (enteredText.Contains("primary rule"))
                 {
                     _flightRuleService._fluightRule = FlightRule.Primary;
                 }
-                else if (enteredText.Contains("rule secondary"))
+                else if (enteredText.Contains("secondary rule"))
                 {
                     _flightRuleService._fluightRule = FlightRule.Secondary;
                 }
