@@ -17,23 +17,27 @@ namespace FlightBooking.Core.Service
             Plane Aircraft,
             FlightRoute FlightRoute)
         {
-            if (_fluightRule == FlightRule.Primary)
-            {
-                if (profitSurplus > 0 &&
-                    seatsTaken < Aircraft.NumberOfSeats &&
-                    seatsTaken / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
-                {
-                    return true;
-                }
-            }
-            if (_fluightRule == FlightRule.Secondary)
-            {
-                if (profitSurplus > costOfFlight &&
-                    seatsTaken < Aircraft.NumberOfSeats &&
-                    employeesAboard / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
-                {
-                    return true;
-                }
+            switch(_fluightRule) {
+                case  FlightRule.Primary :
+                    {
+                        if (profitSurplus > 0 &&
+                            seatsTaken < Aircraft.NumberOfSeats &&
+                            seatsTaken / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
+                            return true;
+                        break;
+                    }
+                case FlightRule.Secondary:
+                    {
+                        if (profitSurplus > costOfFlight &&
+                            seatsTaken < Aircraft.NumberOfSeats &&
+                            employeesAboard / (double)Aircraft.NumberOfSeats > FlightRoute.MinimumTakeOffPercentage)
+                            return true;
+                    }
+                    break;
+                default:
+                    {
+                        return false;
+                    }
             }
             return false;
         }
