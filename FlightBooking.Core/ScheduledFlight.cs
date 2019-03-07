@@ -145,21 +145,31 @@ namespace FlightBooking.Core
             {
                 result += "FLIGHT MAY NOT PROCEED";
 
-                var availablePlanes = AvailablePlaneService
-                    .GetWithMoreSeats(seatsTaken);
-
-                if(availablePlanes != null)
-                {
-                    result += string.Format("{0}Other more suitable aircraft are:{1}",
-                        _newLine,
-                        _newLine);
-                    foreach (var plane in availablePlanes)
-                    {
-                        result += string.Format("{0} could handle this flight.{1}", plane.Name, _newLine);
-                    }
-                }
+                if (seatsTaken > Aircraft.NumberOfSeats)
+                    result += checkForAvailablePlanes(seatsTaken);
             }
             
+            return result;
+        }
+
+        private string checkForAvailablePlanes(int seatsTaken)
+        {
+            var availablePlanes = AvailablePlaneService
+                .GetWithMoreSeats(seatsTaken);
+
+            var result = string.Empty;
+            if (availablePlanes != null)
+            {
+                result += string.Format("{0}Other more suitable aircraft are:{1}",
+                    _newLine,
+                    _newLine);
+                foreach (var plane in availablePlanes)
+                {
+                    result += string.Format("{0} could handle this flight.{1}", 
+                        plane.Name,
+                        _newLine);
+                }
+            }
             return result;
         }
     }
